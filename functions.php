@@ -58,14 +58,18 @@ add_filter( 'should_load_remote_block_patterns', '__return_false' );
  * Pattern strip front CSS (built from assets/scss via npm run build:css).
  */
 function start_theme_enqueue_pattern_styles(): void {
+	$deps = array( 'wp-block-library' );
+	if ( wp_style_is( 'global-styles', 'registered' ) ) {
+		$deps[] = 'global-styles';
+	}
 	wp_enqueue_style(
 		'start-theme-pattern',
 		get_template_directory_uri() . '/assets/start-theme-pattern.css',
-		array(),
+		$deps,
 		wp_get_theme()->get( 'Version' )
 	);
 }
-add_action( 'wp_enqueue_scripts', 'start_theme_enqueue_pattern_styles' );
+add_action( 'wp_enqueue_scripts', 'start_theme_enqueue_pattern_styles', 20 );
 
 /**
  * Ensure strip Query blocks persist picks into `query.include` so inner blocks receive them via `providesContext`.

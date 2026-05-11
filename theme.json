@@ -173,7 +173,8 @@
 				"heroCoverMax": "600px",
 				"heroCoverTabletMax": "390px",
 				"secondaryCoverMax": "190px",
-				"secondaryCoverTabletMin": "186px"
+				"secondaryCoverTabletMin": "186px",
+				"mobileCoverMax": "207px"
 			}
 		}
 	},
