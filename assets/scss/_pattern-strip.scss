@@ -1,0 +1,397 @@
+/**
+ * Strip: grid on `.st-featured-strip--mosaic-weather` with `display:contents` on Query + Post Template.
+ * Weather lives in `.st-strip-weather-slot` (bottom-right). Covers: hero 600px / secondary 190px on wide viewports.
+ */
+.st-featured-strip.st-featured-strip--mosaic-weather {
+	display: grid;
+
+	/* Mobile-first: one column; tablet 782–1023 = 1 full row + 1+1 row; desktop ≥1024 = 7fr/3fr mosaic (theme.json stripMosaic). */
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto;
+	gap: var(--wp--custom--strip-mosaic--row-gap, 1.5rem) var(--wp--custom--strip-mosaic--column-gap, 30px);
+	align-items: start;
+
+	/* Editor: outer Group wraps Query + weather in `.block-editor-block-list__layout` (not on the front). */
+	> .block-editor-block-list__layout {
+		display: contents;
+	}
+
+	.wp-block-query.st-query-mosaic {
+		display: contents;
+	}
+
+	/* Editor: inner blocks live inside `.block-editor-block-list__layout` (not on the front). */
+	.wp-block-query.st-query-mosaic > .block-editor-block-list__layout {
+		display: contents;
+	}
+
+	.wp-block-query.st-query-mosaic > .wp-block-post-template.st-query-mosaic__template,
+	.wp-block-query.st-query-mosaic > ul.wp-block-post-template.st-query-mosaic__template,
+	.wp-block-query.st-query-mosaic .block-editor-block-list__layout > ul.wp-block-post-template.st-query-mosaic__template {
+		display: contents;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Appender would become an extra grid item — hide in this strip (add blocks via List view). */
+	.wp-block-query.st-query-mosaic .block-list-appender {
+		display: none;
+	}
+
+	.wp-block-query.st-query-mosaic > .wp-block-query-no-results {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+	}
+
+	/*
+	 * Tablet (782–1023): row1 = first post full width; row2 = second post | weather (1+1).
+	 * Sync breakpoints with theme.json stripMosaic.wideMin / tabletMax / lgMin.
+	 */
+	@media (width >= 782px) and (width <= 1023px) {
+		grid-template-columns: 1fr 1fr;
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child {
+			grid-column: 1 / -1;
+			grid-row: 1;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:not(:has(> li:nth-child(2).block-editor-block-preview__live-content)) > li.wp-block-post:nth-child(2) {
+			grid-column: 1;
+			grid-row: 2;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:has(> li:nth-child(2).block-editor-block-preview__live-content) > li.wp-block-post:nth-child(3) {
+			grid-column: 1;
+			grid-row: 2;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:nth-child(n + 3):not(.block-editor-block-preview__live-content) {
+			grid-column: 1 / -1;
+			grid-row: auto;
+			list-style: none;
+		}
+
+		.st-strip-weather-slot {
+			grid-column: 2;
+			grid-row: 2;
+			align-self: stretch;
+			width: 100%;
+			max-width: 100%;
+			min-width: 0;
+			margin: 0;
+		}
+	}
+
+	/*
+	 * Desktop (≥1024): hero left spanning 2 rows, second post + weather in the right column.
+	 * Editor: hidden preview clone as 2nd <li> — third <li> is the real second post.
+	 */
+	@media (width >= 1024px) {
+		grid-template-columns: var(
+			--wp--custom--strip-mosaic--column-template,
+			minmax(0, 7fr) minmax(0, 3fr)
+		);
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child {
+			grid-column: 1;
+			grid-row: 1 / span 2;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:not(:has(> li:nth-child(2).block-editor-block-preview__live-content)) > li.wp-block-post:nth-child(2) {
+			grid-column: 2;
+			grid-row: 1;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:has(> li:nth-child(2).block-editor-block-preview__live-content) > li.wp-block-post:nth-child(3) {
+			grid-column: 2;
+			grid-row: 1;
+			align-self: start;
+			list-style: none;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:nth-child(n + 3):not(.block-editor-block-preview__live-content) {
+			grid-column: 1 / -1;
+			grid-row: auto;
+			list-style: none;
+		}
+
+		.st-strip-weather-slot {
+			grid-column: 2;
+			grid-row: 2;
+			align-self: stretch;
+			width: 100%;
+			max-width: 100%;
+			min-width: 0;
+			margin: 0;
+		}
+	}
+
+	.st-strip-weather-slot .wp-block-forwp-weather {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	/* Editor: hide no-results when the loop already rendered items (core still outputs the block). */
+	.wp-block-query.st-query-mosaic:has(ul.wp-block-post-template > li.wp-block-post),
+	.wp-block-query.st-query-mosaic:has(.block-editor-block-list__layout ul > li) {
+		> .wp-block-query-no-results {
+			display: none !important;
+		}
+	}
+
+	/* Drop core block-margin flow spacing between mosaic items (~24px). */
+	.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post {
+		margin-block: 0;
+	}
+
+	/* 20px between featured media (Cover) and the text stack (category / title / excerpt). */
+	.st-query-mosaic ul.wp-block-post-template > li.wp-block-post > .wp-block-cover {
+		margin-block-end: 0;
+	}
+
+	.st-query-mosaic ul.wp-block-post-template > li.wp-block-post > .wp-block-cover + .wp-block-group {
+		margin-block-start: 20px;
+	}
+
+	/* Category: Archivo Narrow 600 14px, LH 100%, tracking 1px, uppercase (pattern uses theme presets). */
+	.st-query-mosaic .wp-block-post-terms {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		font-family: var(--wp--preset--font-family--archivo-narrow), 'Archivo Narrow', sans-serif;
+		font-weight: 600;
+		font-size: var(--wp--preset--font-size--strip-body-sm, 14px);
+		line-height: 1;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+
+		a {
+			color: var(--wp--preset--color--custom-dark-green);
+			font-weight: 600;
+			text-decoration: none;
+		}
+	}
+
+	/* Excerpt: Archivo 400 14px, LH 140%, custom-dark-gray (#707070). */
+	.st-query-mosaic .wp-block-post-excerpt__excerpt {
+		font-family: var(--wp--preset--font-family--archivo), Archivo, sans-serif;
+		font-weight: 400;
+		font-size: var(--wp--preset--font-size--strip-body-sm, 14px);
+		line-height: 1.4;
+		letter-spacing: 0;
+		color: var(--wp--preset--color--custom-dark-gray);
+		margin-top: 0;
+	}
+
+	/* Main post title: Archivo 600, 34px at LG, LH 120% (no link in pattern — legacy `a` neutralized). */
+	.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child .wp-block-post-title {
+		font-family: var(--wp--preset--font-family--archivo), Archivo, sans-serif;
+		font-weight: 600;
+		font-size: clamp(1.375rem, 2.2vw, 2rem);
+		line-height: 1.2;
+		letter-spacing: 0;
+		margin-top: 0;
+		margin-bottom: 0.75rem;
+		color: var(--wp--preset--color--contrast);
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+
+	@media (min-width: var(--wp--custom--strip-mosaic--lg-min, 1024px)) {
+		.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child .wp-block-post-title {
+			font-size: var(--wp--preset--font-size--strip-hero-title, 34px);
+		}
+	}
+
+	.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child .wp-block-post-featured-image {
+		margin-bottom: 1rem;
+	}
+
+	/* Secondary (and further) titles: Archivo 600 20px, LH 120%. */
+	.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) .wp-block-post-title {
+		font-family: var(--wp--preset--font-family--archivo), Archivo, sans-serif;
+		font-weight: 600;
+		font-size: var(--wp--preset--font-size--strip-secondary-title, 20px);
+		line-height: 1.2;
+		letter-spacing: 0;
+		margin-top: 0;
+		margin-bottom: 0.35rem;
+		color: var(--wp--preset--color--contrast);
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+
+	/*
+	 * Cover caps: use literal 782px in @media (matches theme.json stripMosaic.wideMin) — some engines
+	 * ignore rules when min-width is only var(). High specificity beats core Cover / aspect-ratio.
+	 */
+	@media (width >= 782px) {
+		$hero-max: var(--wp--custom--strip-mosaic--hero-cover-max, 600px);
+		$secondary-max: var(--wp--custom--strip-mosaic--secondary-cover-max, 190px);
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child > .wp-block-cover,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child > .wp-block-cover {
+			min-height: clamp(220px, 42vw, #{$hero-max});
+			max-height: #{$hero-max};
+			height: auto;
+			aspect-ratio: unset;
+			overflow: hidden;
+			box-sizing: border-box;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child > .wp-block-cover .wp-block-cover__image-background,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child > .wp-block-cover .wp-block-cover__image-background {
+			min-height: clamp(220px, 42vw, #{$hero-max});
+			max-height: #{$hero-max};
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			box-sizing: border-box;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) > .wp-block-cover,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) > .wp-block-cover {
+			min-height: clamp(120px, 14vw, #{$secondary-max});
+			max-height: #{$secondary-max};
+			height: clamp(120px, 14vw, #{$secondary-max});
+			overflow: hidden;
+			box-sizing: border-box;
+			aspect-ratio: unset;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) > .wp-block-cover .wp-block-cover__image-background,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) > .wp-block-cover .wp-block-cover__image-background {
+			min-height: clamp(120px, 14vw, #{$secondary-max});
+			max-height: #{$secondary-max};
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			box-sizing: border-box;
+		}
+	}
+
+	/* Featured image fallback if template uses post-featured-image instead of Cover */
+	.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child .wp-block-post-featured-image img {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	@media (width >= 782px) {
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child .wp-block-post-featured-image img,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child .wp-block-post-featured-image img {
+			min-height: clamp(220px, 42vw, var(--wp--custom--strip-mosaic--hero-cover-max, 600px));
+			max-height: var(--wp--custom--strip-mosaic--hero-cover-max, 600px);
+			object-fit: cover;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) .wp-block-post-featured-image img,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) .wp-block-post-featured-image img {
+			height: clamp(120px, 14vw, var(--wp--custom--strip-mosaic--secondary-cover-max, 190px));
+			min-height: clamp(120px, 14vw, var(--wp--custom--strip-mosaic--secondary-cover-max, 190px));
+			max-height: var(--wp--custom--strip-mosaic--secondary-cover-max, 190px);
+			object-fit: cover;
+		}
+	}
+
+	/* Tablet: fixed hero media height (theme.json stripMosaic.heroCoverTabletMax). Overrides the generic ≥782px caps above. */
+	@media (width >= 782px) and (width <= 1023px) {
+		$tablet-hero: var(--wp--custom--strip-mosaic--hero-cover-tablet-max, 390px);
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child > .wp-block-cover,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child > .wp-block-cover {
+			min-height: 0;
+			max-height: #{$tablet-hero};
+			height: #{$tablet-hero};
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child > .wp-block-cover .wp-block-cover__image-background,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child > .wp-block-cover .wp-block-cover__image-background {
+			min-height: 0;
+			max-height: #{$tablet-hero};
+			height: 100%;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:first-child .wp-block-post-featured-image img,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child .wp-block-post-featured-image img {
+			min-height: 0;
+			max-height: #{$tablet-hero};
+			height: #{$tablet-hero};
+			object-fit: cover;
+		}
+
+		$tablet-secondary-min: var(--wp--custom--strip-mosaic--secondary-cover-tablet-min, 186px);
+		$tablet-secondary-max: var(--wp--custom--strip-mosaic--secondary-cover-max, 190px);
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) > .wp-block-cover,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) > .wp-block-cover {
+			min-height: #{$tablet-secondary-min};
+			max-height: #{$tablet-secondary-max};
+			height: auto;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) > .wp-block-cover .wp-block-cover__image-background,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) > .wp-block-cover .wp-block-cover__image-background {
+			min-height: #{$tablet-secondary-min};
+			max-height: #{$tablet-secondary-max};
+			height: 100%;
+		}
+
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template > li.wp-block-post:not(:first-child) .wp-block-post-featured-image img,
+		.wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:not(:first-child) .wp-block-post-featured-image img {
+			min-height: #{$tablet-secondary-min};
+			max-height: #{$tablet-secondary-max};
+			height: auto;
+			object-fit: cover;
+		}
+	}
+
+	/* Empty Cover inner container (no inner blocks). */
+	.st-query-mosaic .wp-block-cover__inner-container:empty {
+		display: none;
+	}
+
+	/* Hidden spacer inside Cover when used instead of paragraph. */
+	.st-query-mosaic .wp-block-cover .wp-block-spacer {
+		display: none;
+	}
+}
+
+@media (max-width: var(--wp--custom--strip-mosaic--stack-max, 781px)) {
+	.st-featured-strip.st-featured-strip--mosaic-weather {
+		grid-template-columns: 1fr;
+	}
+
+	.st-featured-strip.st-featured-strip--mosaic-weather .wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template > li.wp-block-post:first-child {
+		grid-column: 1;
+		grid-row: auto;
+	}
+
+	.st-featured-strip.st-featured-strip--mosaic-weather .wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:not(:has(> li:nth-child(2).block-editor-block-preview__live-content)) > li.wp-block-post:not(:first-child),
+	.st-featured-strip.st-featured-strip--mosaic-weather .wp-block-query.st-query-mosaic ul.wp-block-post-template.st-query-mosaic__template:has(> li:nth-child(2).block-editor-block-preview__live-content) > li.wp-block-post:nth-child(n + 2) {
+		grid-column: 1;
+		grid-row: auto;
+	}
+
+	.st-featured-strip.st-featured-strip--mosaic-weather .st-strip-weather-slot {
+		grid-column: 1;
+		grid-row: auto;
+	}
+}

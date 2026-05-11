@@ -1,0 +1,20 @@
+{
+	"name": "start-theme/dev-tools",
+	"description": "Dev-only PHPCS for start-theme (not required at runtime).",
+	"type": "project",
+	"license": "GPL-2.0-or-later",
+	"require": {},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"squizlabs/php_codesniffer": "^3.10",
+		"wp-coding-standards/wpcs": "^3.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"lint": "phpcs"
+	}
+}

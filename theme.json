@@ -1,0 +1,210 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.9/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"palette": [
+				{
+					"color": "#ffffff",
+					"name": "Base",
+					"slug": "base"
+				},
+				{
+					"color": "#111111",
+					"name": "Contrast",
+					"slug": "contrast"
+				},
+				{
+					"color": "#555555",
+					"name": "Muted",
+					"slug": "muted"
+				},
+				{
+					"color": "#1f6f4a",
+					"name": "Accent",
+					"slug": "st-accent"
+				},
+				{
+					"color": "#707070",
+					"name": "DarkGray",
+					"slug": "custom-dark-gray"
+				},
+				{
+					"color": "#537a50",
+					"name": "DarkGreen",
+					"slug": "custom-dark-green"
+				}
+			]
+		},
+		"layout": {
+			"contentSize": "1350px",
+			"wideSize": "1350px"
+		},
+		"spacing": {
+			"spacingScale": {
+				"theme": [
+					{
+						"name": "0",
+						"size": "1.25rem",
+						"slug": "20"
+					},
+					{
+						"name": "1",
+						"size": "2rem",
+						"slug": "40"
+					},
+					{
+						"name": "2",
+						"size": "3rem",
+						"slug": "50"
+					}
+				]
+			},
+			"spacingSizes": [],
+			"units": [
+				"%",
+				"px",
+				"em",
+				"rem",
+				"vh",
+				"vw"
+			]
+		},
+		"typography": {
+			"fluid": true,
+			"fontSizes": [
+				{
+					"name": "Strip hero title",
+					"size": "34px",
+					"slug": "strip-hero-title"
+				},
+				{
+					"name": "Strip secondary title",
+					"size": "20px",
+					"slug": "strip-secondary-title"
+				},
+				{
+					"name": "Strip body small",
+					"size": "14px",
+					"slug": "strip-body-sm"
+				}
+			],
+			"fontFamilies": [
+				{
+					"fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif",
+					"name": "System Sans",
+					"slug": "system-sans"
+				},
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Archivo",
+							"fontStyle": "normal",
+							"fontWeight": "300",
+							"src": [
+								"file:./assets/fonts/archivo/archivo-300-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Archivo",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": [
+								"file:./assets/fonts/archivo/archivo-400-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Archivo",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"src": [
+								"file:./assets/fonts/archivo/archivo-600-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Archivo",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./assets/fonts/archivo/archivo-700-normal.woff2"
+							]
+						},
+						{
+							"fontFamily": "Archivo",
+							"fontStyle": "normal",
+							"fontWeight": "900",
+							"src": [
+								"file:./assets/fonts/archivo/archivo-900-normal.woff2"
+							]
+						}
+					],
+					"fontFamily": "Archivo, sans-serif",
+					"name": "Archivo",
+					"slug": "archivo"
+				},
+				{
+					"fontFace": [
+						{
+							"fontFamily": "\"Archivo Narrow\"",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"src": [
+								"file:./assets/fonts/archivo-narrow/archivo-narrow-600-normal.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Archivo Narrow\", sans-serif",
+					"name": "Archivo Narrow",
+					"slug": "archivo-narrow"
+				}
+			]
+		},
+		"useRootPaddingAwareAlignments": true,
+		"custom": {
+			"stripMosaic": {
+				"stackMax": "781px",
+				"wideMin": "782px",
+				"tabletMax": "1023px",
+				"lgMin": "1024px",
+				"columnGap": "30px",
+				"rowGap": "1.5rem",
+				"columnTemplate": "minmax(0, 7fr) minmax(0, 3fr)",
+				"heroCoverMax": "600px",
+				"heroCoverTabletMax": "390px",
+				"secondaryCoverMax": "190px",
+				"secondaryCoverTabletMin": "186px"
+			}
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base)",
+			"text": "var(--wp--preset--color--contrast)"
+		},
+		"spacing": {
+			"padding": {
+				"bottom": "1.5rem",
+				"left": "1.25rem",
+				"right": "1.25rem",
+				"top": "1.5rem"
+			}
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--system-sans)",
+			"lineHeight": "1.6"
+		}
+	},
+	"templateParts": [
+		{
+			"area": "header",
+			"name": "header",
+			"title": "Header"
+		},
+		{
+			"area": "footer",
+			"name": "footer",
+			"title": "Footer"
+		}
+	]
+}

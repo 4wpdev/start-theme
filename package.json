@@ -1,0 +1,18 @@
+{
+	"name": "start-theme",
+	"private": true,
+	"description": "Minimal Sass build + Stylelint for SCSS; optional PHPCS via Composer.",
+	"scripts": {
+		"build:css": "sass assets/scss/main.scss assets/start-theme-pattern.css --no-source-map --style=expanded",
+		"watch:css": "sass assets/scss/main.scss assets/start-theme-pattern.css --watch --no-source-map --style=expanded",
+		"lint": "npm run lint:css && npm run lint:php",
+		"lint:css": "stylelint \"assets/scss/**/*.scss\"",
+		"lint:css:fix": "stylelint \"assets/scss/**/*.scss\" --fix",
+		"lint:php": "composer run lint"
+	},
+	"devDependencies": {
+		"sass": "^1.77.0",
+		"stylelint": "^16.0.0",
+		"stylelint-config-standard-scss": "^13.0.0"
+	}
+}
